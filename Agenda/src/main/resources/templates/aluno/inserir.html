@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Inserção de Aluno</title>
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+	<div th:replace="fragments/fragments :: header"></div>
+	<div class="container">
+		<h2>Criação de novo aluno</h2>
+		<form class="form-horizontal" action="/alunos/inserir" method="POST" th:object="${aluno}">
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="txt-nome">Nome do aluno</label>
+					<input type="text" class="form-control" id="txt-nome" th:field="*{nome}" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="txt-idade">Idade do aluno</label>
+					<input type="number" class="form-control" id="txt-idade" th:field="*{idade}" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="slt-instituicao">Instituição</label>
+					<select class="form-control" th:field="*{instituicao.id}">
+						<option th:each="instituicao: ${instituicoes}" th:value="${instituicao.id}" th:text="${instituicao.nome}"></option>
+					</select>
+				</div>
+			</div>
+			<input type="submit" value="Salvar" class="btn btn-default" />
+		</form>
+	</div>
+	<script type="text/javascript" src="/webjars/jquery/3.1.1-1/jquery.min.js"></script>
+	<div th:replace="fragments/fragments :: footer"></div>
+</body>
+</html>

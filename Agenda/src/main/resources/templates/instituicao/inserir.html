@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Inserção de Instituição</title>
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+	<div th:replace="fragments/fragments :: header"></div>
+	<div class="container">
+		<h2>Criação de nova instituição</h2>
+		<form class="form-horizontal" action="/instituicoes/inserir" method="POST" th:object="${instituicao}">
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="txt-nome">Nome da instituição</label>
+					<input type="text" class="form-control" id="txt-nome" th:field="*{nome}" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="txt-endereco">Endereço da instituição</label>
+					<input type="text" class="form-control" id="txt-endereco" th:field="*{endereco}" />
+				</div>
+			</div>
+			<input type="submit" value="Salvar" class="btn btn-default" />
+		</form>
+	</div>
+	<script type="text/javascript" src="/webjars/jquery/3.1.1-1/jquery.min.js"></script>
+	<div th:replace="fragments/fragments :: footer"></div>
+</body>
+</html>

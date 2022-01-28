@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<meta charset="UTF-8" />
+<title>Instituições</title>
+<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+</head>
+<body>
+	<header th:replace="fragments/fragments :: header"></header>
+	<div class="container">
+		<h2>Lista de Instituições Cadastradas</h2>
+		<a href="/instituicoes/inserir" class="btn btn-default">Cadastrar nova instituições</a>
+		<div class="row">
+			<div class="form-group col-md-12">
+				<label for="txt-pesquisa-instituicao">Pesquisar instituição</label>
+				<input type="text" class="form-control" id="txt-pesquisa-instituicao" />
+				<button type="button" class="btn btn-default" id="btn-pesquisa-instituicao">Pesquisar</button>
+			</div>
+		</div>
+		<table class="table" id="tbl-instituicoes">
+			<thead>
+				<th>Nome da Instituição</th>
+				<th>Endereço da Instituição</th>
+				<th>Ações</th>
+			</thead>
+			<tbody>
+				<tr th:each="instituicao : ${instituicoes}">
+					<td th:text="${instituicao.nome}"></td>
+					<td th:text="${instituicao.endereco}"></td>
+					<td>
+						<a th:href="@{/instituicoes/editar/{id}(id=${instituicao.id})}">Editar</a> |
+						<a th:href="@{/instituicoes/excluir/{id}(id=${instituicao.id})}">Excluir</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<footer th:replace="fragments/fragments :: footer"></footer>
+	<script src="/webjars/jquery/3.1.1-1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			$('#btn-pesquisa-instituicao').click(function(){
+				$.ajax({method: 'GET',
+						url: '/instituicoes/pesquisarPorNome/' + $('#txt-pesquisa-instituicao').val(),
+						success: function(data) {
+							$('#tbl-instituicoes tbody > tr').remove();
+							$.each(data, function() {
+								$('#tbl-instituicoes tbody').append(
+									'<tr>' +
+									'	<td>' + this.nome + ' </td>' +
+									'	<td>' + this.endereco + ' </td>' +
+									'	<td>' + 
+									'	<a href="/instituicoes/editar/' + this.id + '">Editar</a> |' +
+									'	<a href="/instituicoes/excluir/' + this.id + '">Excluir</a> ' +
+									'	</td>' +
+									'</tr>'
+								);
+							})
+						},
+						error: function() {
+							alert('Não foi possível executar a pesquisa');
+						}
+				});
+			});
+			
+		})
+	</script>
+</body>
+</html>

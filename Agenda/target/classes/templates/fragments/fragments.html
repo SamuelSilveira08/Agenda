@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+<title>Insert title here</title>
+</head>
+<body>
+	<header th:fragment="header">
+		<nav class="navbar navbar-inverse navbar-static-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" 
+						data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+							aria-controls="navbar">
+						<span class="sr-only">Toggle Navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>		
+					</button>
+				</div>
+				<a class="navbar-brand" href="">Spring Boot</a>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="/instituicoes/index">Instituições</a></li>
+						<li><a href="/alunos/index">Alunos</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<footer th:fragment="footer">
+		<div style="text-align: center;">
+			&copy; 2021 Samuel Silveira
+		</div>
+	</footer>
+</body>
+</html>

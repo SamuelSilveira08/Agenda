@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<meta charset="UTF-8" />
+<title>Alunos</title>
+<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+</head>
+<body>
+	<header th:replace="fragments/fragments :: header"></header>
+	<div class="container">
+		<h2>Lista de Alunos Cadastrados</h2>
+		<a href="/alunos/inserir" class="btn btn-default">Cadastrar novo aluno</a>
+		<div class="row">
+			<div class="form-group col-md-12">
+				<label for="txt-pesquisa-aluno">Pesquisar aluno</label>
+				<input type="text" class="form-control" id="txt-pesquisa-aluno" />
+				<button type="button" class="btn btn-default" id="btn-pesquisa-aluno">Pesquisar</button>
+			</div>
+		</div>
+		<table class="table" id="tbl-alunos">
+			<thead>
+				<th>Nome do Aluno</th>
+				<th>Idade</th>
+				<th>Instituição</th>
+				<th>Ações</th>
+			</thead>
+			<tbody>
+				<tr th:each="aluno : ${alunos}">
+					<td th:text="${aluno.nome}"></td>
+					<td th:text="${aluno.idade}"></td>
+					<td th:text="${aluno.instituicao.nome}"></td>
+					<td>
+						<a th:href="@{/alunos/editar/{id}(id=${aluno.id})}">Editar</a> |
+						<a th:href="@{/alunos/excluir/{id}(id=${aluno.id})}">Excluir</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<footer th:replace="fragments/fragments :: footer"></footer>
+	<script src="/webjars/jquery/3.1.1-1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			$('#btn-pesquisa-aluno').click(function(){
+				$.ajax({method: 'GET',
+						url: '/alunos/pesquisarPorNome/' + $('#txt-pesquisa-aluno').val(),
+						success: function(data) {
+							$('#tbl-alunos tbody > tr').remove();
+							$.each(data, function() {
+								$('#tbl-alunos tbody').append(
+									'<tr>' +
+									'	<td>' + this.nome + ' </td>' +
+									'	<td>' + this.idade + ' </td>' +
+									' 	<td>' + this.instituicao.nome + ' </td>' +
+									'	<td>' + 
+									'	<a href="/alunos/editar/' + this.id + '">Editar</a> |' +
+									'	<a href="/alunos/excluir/' + this.id + '">Excluir</a> ' +
+									'	</td>' +
+									'</tr>'
+								);
+							})
+						},
+						error: function() {
+							alert('Não foi possível executar a pesquisa');
+						}
+				});
+			});
+			
+		})
+	</script>
+</body>
+</html>
